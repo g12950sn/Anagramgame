@@ -28,8 +28,9 @@
  */
 
 /* Anagram Game Application */
-
 package com.toy.anagrams.lib;
+
+import java.util.Random;
 
 /**
  * Implementation of the logic for the Anagram Game application.
@@ -83,7 +84,6 @@ final class StaticWordLibrary extends WordLibrary {
         "vertex",
         "unsigned",
         "traditional"};
-
     private static final String[] SCRAMBLED_WORD_LIST = {
         "batsartcoin",
         "maibuguos",
@@ -132,7 +132,6 @@ final class StaticWordLibrary extends WordLibrary {
         "nuisngde",
         "datioialnrt"//元々あった単語のスクランブルしたものを変更
     };
-    
     final static WordLibrary DEFAULT = new StaticWordLibrary();
 
     /**
@@ -143,6 +142,7 @@ final class StaticWordLibrary extends WordLibrary {
 
     /**
      * Gets the word at a given index.
+     *
      * @param idx index of required word
      * @return word at that index in its natural form
      */
@@ -150,17 +150,63 @@ final class StaticWordLibrary extends WordLibrary {
         return WORD_LIST[idx];
     }
 
+    /*public void Shuffle(int idx) {
+        String word = WORD_LIST[idx];
+        char[] shuffle = new char[word.length()];
+
+        for (int i = 1; i < word.length(); i++) {
+            shuffle[i] = word.charAt(i);
+        }
+        Random rand = new Random();
+        int ran = rand.nextInt(word.length() - 1);
+
+        char w = shuffle[ran];
+        shuffle[ran] = shuffle[ran + 1];
+        shuffle[ran + 1] = w;
+
+        for (int i = 1; i < word.length(); i++) {
+            System.out.print(shuffle[i]);
+        }
+    }*/
+
     /**
      * Gets the word at a given index in its scrambled form.
+     *
      * @param idx index of required word
      * @return word at that index in its scrambled form
      */
     public String getScrambledWord(int idx) {
-        return SCRAMBLED_WORD_LIST[idx];
+         String word = WORD_LIST[idx];
+        char[] shuffle = new char[word.length()];
+
+        for (int i = 0; i < word.length(); i++) {
+            shuffle[i] = word.charAt(i);
+        }
+        Random rand = new Random();
+        int ran2 =0;
+        int ran = rand.nextInt(word.length() - 1);
+        boolean flag=true;
+        while(flag){
+            ran2 =rand.nextInt(word.length()-1);
+            if(ran==ran2 || String.valueOf(shuffle[ran]).equals(String.valueOf(shuffle[ran2]))) flag=true;
+            else flag = false;
+            
+        }
+
+        char w = shuffle[ran];
+        shuffle[ran] = shuffle[ran2];
+        shuffle[ran2] = w;
+        String answer ="";
+
+        for (int i = 0; i < word.length(); i++) {
+            answer = answer + String.valueOf(shuffle[i]);
+        }
+       return answer;
     }
 
     /**
      * Gets the number of words in the library.
+     *
      * @return the total number of plain/scrambled word pairs in the library
      */
     public int getSize() {
@@ -169,6 +215,7 @@ final class StaticWordLibrary extends WordLibrary {
 
     /**
      * Checks whether a user's guess for a word at the given index is correct.
+     *
      * @param idx index of the word guessed
      * @param userGuess the user's guess for the actual word
      * @return true if the guess was correct; false otherwise
@@ -176,5 +223,4 @@ final class StaticWordLibrary extends WordLibrary {
     public boolean isCorrect(int idx, String userGuess) {
         return userGuess.equals(getWord(idx));
     }
-
 }
