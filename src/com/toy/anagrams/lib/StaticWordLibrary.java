@@ -39,6 +39,7 @@ final class StaticWordLibrary extends WordLibrary {
     private static final String[] WORD_LIST = {
         "abstraction",
         "ambiguous",
+        "apple",//追加した単語(正解)
         "arithmetic",
         "backslash",
         "bitmap",
@@ -86,6 +87,7 @@ final class StaticWordLibrary extends WordLibrary {
     private static final String[] SCRAMBLED_WORD_LIST = {
         "batsartcoin",
         "maibuguos",
+        "papel",//追加した単語(混ぜたもの)
         "ratimhteci",
         "abkclssha",
         "ibmtpa",
@@ -128,7 +130,7 @@ final class StaticWordLibrary extends WordLibrary {
         "ohjtvaa",
         "evtrxe",
         "nuisngde",
-        "rtdatioialn"
+        "datioialnrt"//元々あった単語のスクランブルしたものを変更
     };
     
     final static WordLibrary DEFAULT = new StaticWordLibrary();
