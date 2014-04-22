@@ -75,4 +75,7 @@ public abstract class WordLibrary {
      * @return true if the guess was correct; false otherwise
      */
     public abstract boolean isCorrect(int idx, String userGuess);
+    
+    public abstract void setLevel(String idx);
+    public abstract int getCount();
 }

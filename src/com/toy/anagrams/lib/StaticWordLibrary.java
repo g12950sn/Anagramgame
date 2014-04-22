@@ -31,14 +31,18 @@
 package com.toy.anagrams.lib;
 
 import java.util.Random;
+import javax.swing.JComboBox;
 
 /**
  * Implementation of the logic for the Anagram Game application.
  */
 final class StaticWordLibrary extends WordLibrary {
 
+    int count = 1;
     private static final String[] WORD_LIST = {
         "abstraction",
+        "aiueo" ,
+        "aiueo",
         "ambiguous",
         "apple",//追加した単語(正解)
         "arithmetic",
@@ -86,6 +90,7 @@ final class StaticWordLibrary extends WordLibrary {
         "traditional"};
     private static final String[] SCRAMBLED_WORD_LIST = {
         "batsartcoin",
+        "ieuao",
         "maibuguos",
         "papel",//追加した単語(混ぜたもの)
         "ratimhteci",
@@ -150,24 +155,21 @@ final class StaticWordLibrary extends WordLibrary {
         return WORD_LIST[idx];
     }
 
-    /*public void Shuffle(int idx) {
-        String word = WORD_LIST[idx];
-        char[] shuffle = new char[word.length()];
+    public void setLevel(String idx) {
 
-        for (int i = 1; i < word.length(); i++) {
-            shuffle[i] = word.charAt(i);
+        count = 1;
+        if (idx.equals("Level2")) {
+            count = 3;
         }
-        Random rand = new Random();
-        int ran = rand.nextInt(word.length() - 1);
-
-        char w = shuffle[ran];
-        shuffle[ran] = shuffle[ran + 1];
-        shuffle[ran + 1] = w;
-
-        for (int i = 1; i < word.length(); i++) {
-            System.out.print(shuffle[i]);
+        if (idx.equals("Level3")) {
+            count = 5;
         }
-    }*/
+        // TODO add your handling code here
+    }
+
+    public int getCount() {
+        return count;
+    }
 
     /**
      * Gets the word at a given index in its scrambled form.
@@ -176,32 +178,43 @@ final class StaticWordLibrary extends WordLibrary {
      * @return word at that index in its scrambled form
      */
     public String getScrambledWord(int idx) {
-         String word = WORD_LIST[idx];
+        String word = WORD_LIST[idx];
         char[] shuffle = new char[word.length()];
-
+        int ran = 0;
+        int ran2 = 0;
         for (int i = 0; i < word.length(); i++) {
             shuffle[i] = word.charAt(i);
         }
-        Random rand = new Random();
-        int ran2 =0;
-        int ran = rand.nextInt(word.length() - 1);
-        boolean flag=true;
-        while(flag){
-            ran2 =rand.nextInt(word.length()-1);
-            if(ran==ran2 || String.valueOf(shuffle[ran]).equals(String.valueOf(shuffle[ran2]))) flag=true;
-            else flag = false;
-            
+
+
+        System.out.println(getCount());
+        for (int i = 0; i < getCount(); i++) {
+            Random rand = new Random();
+            ran2 = 0;
+            ran = rand.nextInt(word.length() - 1);
+            boolean flag = true;
+
+
+            while (flag) {
+                ran2 = rand.nextInt(word.length() - 1);
+                if (ran == ran2 || String.valueOf(shuffle[ran]).equals(String.valueOf(shuffle[ran2]))) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+
+            }
         }
 
         char w = shuffle[ran];
         shuffle[ran] = shuffle[ran2];
         shuffle[ran2] = w;
-        String answer ="";
+        String answer = "";
 
         for (int i = 0; i < word.length(); i++) {
             answer = answer + String.valueOf(shuffle[i]);
         }
-       return answer;
+        return answer;
     }
 
     /**
